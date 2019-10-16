@@ -51,13 +51,15 @@ with open(filename)as file:
                 temp2[religion_index + 1] = 'Atheist'
             if '\" Agnostic (not sure if there is a God) \"' in temp2[religion_index+1]:
                 temp2[religion_index + 1] = 'Agnostic'
+            if 'Unity; Unity Church Christ Church Unity' in temp2[religion_index+1]:
+                temp2[religion_index + 1] = 'Unity Church Christ'
             if '(VOL)' in temp2[religion_index+1]:
                 temp2[religion_index + 1] = temp2[religion_index + 1].replace('(VOL)','')
             if '" ' in temp2[religion_index+1]:
                 temp2[religion_index + 1] = temp2[religion_index + 1].replace('" ','')
             if ' "' in temp2[religion_index+1]:
                 temp2[religion_index + 1] = temp2[religion_index + 1].replace(' "','')
-
+            
             income.append(temp2[income_index+1])
             religion.append(temp2[religion_index + 1])
 
@@ -72,5 +74,8 @@ results['Income'] = pd.Categorical(data['Income'],["<$10k", "$10-20k", "$20-30k"
 results = results.groupby(['Religion','Income'])['Val'].sum().reset_index()
 #results = results.pivot_table('Val','Income','Religion')
 
+pd.set_option('display.max_rows', 1000)
+pd.set_option('display.max_columns', 5)
+pd.set_option('display.width', 1000)
 
 print(results)
